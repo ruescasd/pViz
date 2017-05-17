@@ -19,4 +19,4 @@ And go to `localhost:8080`
 
 # Acknowledgements
 
-pViz used the skeleton [workbench example app](https://github.com/lihaoyi/workbench-example-app) by [lihaoyi](https://github.com/lihaoyi/ as a starting point.
+pViz used the skeleton [workbench example app](https://github.com/lihaoyi/workbench-example-app) by [lihaoyi](https://github.com/lihaoyi/) as a starting point.
