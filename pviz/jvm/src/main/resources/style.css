@@ -1,0 +1,71 @@
+table {
+	width: 100%;
+	height: 100%;
+	table-layout: fixed;
+}
+td {
+	border: 1px solid;
+}
+
+.present-root {
+	background-color: gray;
+}
+.present-1 {
+	background-color: darkkhaki;
+}
+.present-2 {
+	background-color: blue;
+}
+.present-3 {
+	background-color: orange;
+}
+.present-bb {
+	background-color: rebeccapurple;
+}
+
+.active {
+	background-color: red;
+}
+
+.done {
+	background-color: green;
+}
+.error {
+	background-color: red;
+}
+.pause {
+	background-color: yellow;
+}
+
+/* http://stackoverflow.com/questions/34439452/blinking-background-color-animation */
+.active {
+ -webkit-animation: NAME-YOUR-ANIMATION 2s infinite; /* Safari 4+ */
+  -moz-animation:    NAME-YOUR-ANIMATION 2s infinite; /* Fx 5+ */
+  -o-animation:      NAME-YOUR-ANIMATION 2s infinite; /* Opera 12+ */
+  animation:         NAME-YOUR-ANIMATION 2s infinite; /* IE 10+, Fx 29+ */
+}
+
+@-webkit-keyframes NAME-YOUR-ANIMATION {
+	0%, 49% {
+	    background-color: white;
+	}
+	50%, 100% {
+	    background-color: lime;
+	}
+}
+
+.idle {
+ -webkit-animation: Blink2 2s infinite; /* Safari 4+ */
+  -moz-animation:    Blink2 2s infinite; /* Fx 5+ */
+  -o-animation:      Blink2 2s infinite; /* Opera 12+ */
+  animation:         Blink2 2s infinite; /* IE 10+, Fx 29+ */
+}
+
+@-webkit-keyframes Blink2 {
+	0%, 49% {
+	    background-color: yellow;
+	}
+	50%, 100% {
+	    background-color: white;
+	}
+}
