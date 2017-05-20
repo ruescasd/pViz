@@ -41,7 +41,7 @@ object Viz extends Names {
         val trustees = config.trustees.size
         headerBox.appendChild(
           p(
-            "election '" + config.name + "' (id = " + config.id + "), items = "
+            "election '" + config.name + "' (id = " + config.id + "), questions = "
               + config.items + ", trustees = " + trustees + ", ",
             for(i <- 1 to trustees) yield {
               span(cls:="present-" + i, "trustee " + i + " ")
@@ -90,7 +90,7 @@ object Viz extends Names {
                 }
               ),
               for(i <- 1 to items) yield {
-                  tr(td("mix verification (item = " + i + ")"),
+                  tr(td("mix verification (q = " + i + ")"),
                   for(j <- 1 to trustees; k <- 1 to trustees if j != k) yield {
                     td(id:=MIX_SIG(i, j, k))
                   }
@@ -132,8 +132,8 @@ object Viz extends Names {
         val trustees = dom.window.localStorage.getItem("trustees").toInt
         val items = dom.window.localStorage.getItem("items").toInt
 
-        println("present ==========")
-        println(status.present)
+        // println("present ==========")
+        // println(status.present)
         println("active ===========")
         println(status.active)
         // clear all

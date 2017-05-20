@@ -102,7 +102,9 @@ object Server extends Api with Names {
 
     val config = getConfig(root)
     val active = (for(i <- 1 to config.trustees.size) yield {
-      Protocol.execute(i, config, files)
+      val act = Protocol.execute(i, config, files)
+      println("active for trustee " + i + " " + act)
+      act
     }).flatten
 
     val end = System.nanoTime()
@@ -194,7 +196,7 @@ object Protocol extends Names {
       .foreach(ret += _._2)
 
     val items = config.items
-    val irules = (1 to items).map(i => itemRules(config, position, i))
+    val irules = (1 to items).map(i => itemRules(config, position, i, files))
 
     val hits = irules.flatMap { rules =>
       rules.find{ case (c, a) => c.eval(files)}
@@ -215,7 +217,7 @@ object Protocol extends Names {
     )
   }
 
-  private def itemRules(config: Config, position: Int, item: Int) = {
+  private def itemRules(config: Config, position: Int, item: Int, files: Seq[String]) = {
 
     val allConfigsYes = Condition(
       (1 to config.trustees.size).map(auth => CONFIG_SIG(auth) -> true)
@@ -302,9 +304,14 @@ object Protocol extends Names {
   }
 
   def getMixPositionInverse(auth: Int, item: Int, trustees: Int): Int = {
-    val gap = trustees - (item - 1)
+    val gap = trustees - item
 
     val permuted = (auth + gap) % trustees
-    permuted + 1
+    if(permuted == 0) {
+      trustees
+    }
+    else {
+      permuted
+    }
   }
 }
