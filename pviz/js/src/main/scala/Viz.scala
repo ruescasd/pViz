@@ -103,11 +103,12 @@ object Viz extends Names {
               ),
               tr(td("decrypted plaintexts"),
                 for(i <- 1 to items) yield {
-                  td(id:=PLAINTEXTS(i))
+                  val decryptor = ((i - 1) % config.trustees.size) + 1
+                  td(id:=PLAINTEXTS(i, decryptor))
                 }
               ),
               tr(td("plaintext verification"),
-                for(i <- 2 to trustees; j <- 1 to items) yield {
+                for(i <- 1 to trustees; j <- 1 to items if i != ((j - 1) % config.trustees.size) + 1) yield {
                   td(id:=PLAINTEXTS_SIG(j, i))
                 }
               ),
@@ -154,7 +155,7 @@ object Viz extends Names {
           }
         }
         if(status.active.size == 0) {
-          val done = (for(i <- 2 to trustees; j <- 1 to items) yield {
+          val done = (for(i <- 1 to trustees; j <- 1 to items if i != ((j - 1) % trustees) + 1) yield {
             jQuery("#" + PLAINTEXTS_SIG(j, i)).hasClass("present-" + i)
           }).filter(!_)
 

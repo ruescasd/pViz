@@ -14,18 +14,18 @@ trait Names {
   def SHARE_STMT(item: Int, auth: Int) = s"$auth-$item-share-stmt-json"
   def SHARE_SIG(item: Int, auth: Int) = s"$auth-$item-share-sig-ucb"
 
-  def PUBLIC_KEY(item: Int) = s"1-$item-public_key-ucb"
+  def PUBLIC_KEY(item: Int) = s"1-$item-public_key-ucs"
   def PUBLIC_KEY_STMT(item: Int) = s"1-$item-public_key-stmt-json"
   def PUBLIC_KEY_SIG(item: Int, auth: Int) = s"$auth-$item-public_key-sig-ucb"
 
-  def BALLOTS(item: Int) = s"bb-$item-ballots-ucb"
+  def BALLOTS(item: Int) = s"bb-$item-ballots-raw"
   def BALLOTS_STMT(item: Int) = s"bb-$item-ballots-stmt-json"
   def BALLOTS_SIG(item: Int) = s"bb-$item-ballots-sig"
 
 
   def PERM_DATA(item: Int, auth: Int) = s"$auth-$item-perm_data"
 
-  def MIX(item: Int, auth: Int) = s"$auth-$item-mix-json"
+  def MIX(item: Int, auth: Int) = s"$auth-$item-mix-raw"
   def MIX_STMT(item: Int, auth: Int) = s"$auth-$item-mix-stmt-json"
 
   def MIX_SIG(item: Int, auth: Int, signingAuth: Int) = s"$signingAuth-$item-mix-$auth-sig-ucb"
@@ -34,7 +34,7 @@ trait Names {
   def DECRYPTION_STMT(item: Int, auth: Int) = s"$auth-$item-decryption-stmt-json"
   def DECRYPTION_SIG(item: Int, auth: Int) = s"$auth-$item-decryption-sig-ucb"
 
-  def PLAINTEXTS(item: Int) = s"1-$item-plaintexts-json"
+  def PLAINTEXTS(item: Int, auth: Int) = s"$auth-$item-plaintexts-raw"
   def PLAINTEXTS_STMT(item: Int) = s"1-$item-plaintext-stmt-json"
   def PLAINTEXTS_SIG(item: Int, auth: Int) = s"$auth-$item-plaintext-sig-ucb"
 

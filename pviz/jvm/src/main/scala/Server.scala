@@ -268,8 +268,10 @@ object Protocol extends Names {
       .toList
     )
 
-    val noPlaintexts = Condition.no(PLAINTEXTS(item))
-    val noPlaintextsSig = Condition.yes(PLAINTEXTS(item)).no(PLAINTEXTS_SIG(item, position))
+    val decryptor = getDecryptingTrustee(item, config.trustees.size)
+
+    val noPlaintexts = Condition.no(PLAINTEXTS(item, decryptor))
+    val noPlaintextsSig = Condition.yes(PLAINTEXTS(item, decryptor)).no(PLAINTEXTS_SIG(item, position))
 
     val rules = ListBuffer[(Cond, String)]()
 
@@ -288,9 +290,9 @@ object Protocol extends Names {
     }
 
     rules += allMixSigs.and(noDecryptions) -> DECRYPTION(item, position)
-    if(position == 1) {
+    if(position == decryptor) {
 
-      rules += allDecryptions.and(noPlaintexts) -> PLAINTEXTS(item)
+      rules += allDecryptions.and(noPlaintexts) -> PLAINTEXTS(item, position)
     }
 
     rules += allDecryptions.and(noPlaintextsSig) -> PLAINTEXTS_SIG(item, position)
@@ -313,5 +315,10 @@ object Protocol extends Names {
     else {
       permuted
     }
+  }
+
+  def getDecryptingTrustee(item: Int, trustees: Int): Int = {
+    val permuted = (item - 1) % trustees
+    permuted + 1
   }
 }
