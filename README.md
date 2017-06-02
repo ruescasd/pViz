@@ -9,6 +9,8 @@ pViz provides a visualization of the [nMix](https://github.com/nVotesOrg/nMix) C
 Currently pViz must run on an nMix trustee, such that there is a working copy of the bulletin board available. This working
 copy is used as the data source to visualize the protocol. All that needs configuring is the filesystem location of that working copy.
 
+TODO: target directory configuration
+
 To start, run
 
 ```
