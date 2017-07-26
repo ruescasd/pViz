@@ -45,6 +45,8 @@ object AutowireServer extends autowire.Server[Js.Value, Reader, Writer]{
 }
 
 object Server extends Api with Names {
+  val root = "/work/projects/nMix/demo/datastore/repo"
+
   def main(args: Array[String]): Unit = {
     implicit val system = ActorSystem()
     implicit val materializer = ActorMaterializer()
@@ -88,7 +90,7 @@ object Server extends Api with Names {
     Http().bindAndHandle(route, "0.0.0.0", port = 8080)
   }
 
-  def getStatus(root: String): Status = {
+  def getStatus(): Status = {
     val start = System.nanoTime()
     val files = getRecursiveListOfFiles(new File(root))
       .filter(_.isFile)
@@ -100,7 +102,7 @@ object Server extends Api with Names {
           .replace("pause", "root-pause")
       })
 
-    val config = getConfig(root)
+    val config = getConfig()
     val active = (for(i <- 1 to config.trustees.size) yield {
       val act = Protocol.execute(i, config, files)
       println("active for trustee " + i + " " + act)
@@ -112,7 +114,7 @@ object Server extends Api with Names {
     Status(files, active)
   }
 
-  def getConfig(root: String): Config = {
+  def getConfig(): Config = {
     val cfg = Source.fromFile(Paths.get(root).resolve("config.json").toFile)(StandardCharsets.UTF_8).mkString
     decode[Config](cfg).right.get
   }

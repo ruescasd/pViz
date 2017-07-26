@@ -30,7 +30,7 @@ trait Names {
 
   def MIX_SIG(item: Int, auth: Int, signingAuth: Int) = s"$signingAuth-$item-mix-$auth-sig-ucb"
 
-  def DECRYPTION(item: Int, auth: Int) = s"$auth-$item-decryption-json"
+  def DECRYPTION(item: Int, auth: Int) = s"$auth-$item-decryption-raw"
   def DECRYPTION_STMT(item: Int, auth: Int) = s"$auth-$item-decryption-stmt-json"
   def DECRYPTION_SIG(item: Int, auth: Int) = s"$auth-$item-decryption-sig-ucb"
 
@@ -50,6 +50,6 @@ case class Config(id: String, name: String, modulus: String, generator: String,
 case class Status(present: Seq[String], active: Seq[String])
 
 trait Api{
-  def getStatus(root: String): Status
-  def getConfig(root: String): Config
+  def getStatus(): Status
+  def getConfig(): Config
 }

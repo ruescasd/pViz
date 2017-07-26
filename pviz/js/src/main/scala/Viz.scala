@@ -31,12 +31,11 @@ object Viz extends Names {
   @JSExport
   def main(): Unit = {
 
-    val repo = "/work/projects/nMix/demo/datastore/repo"
     val headerBox = div.render
     val statusBox = div.render
 
     def init() = {
-      Client[Api].getConfig(repo).call().foreach { config =>
+      Client[Api].getConfig().call().foreach { config =>
         val items = config.items
         val trustees = config.trustees.size
         headerBox.appendChild(
@@ -129,7 +128,7 @@ object Viz extends Names {
     }
 
     def update() = {
-      Client[Api].getStatus(repo).call().foreach { status =>
+      Client[Api].getStatus().call().foreach { status =>
         val trustees = dom.window.localStorage.getItem("trustees").toInt
         val items = dom.window.localStorage.getItem("items").toInt
 
