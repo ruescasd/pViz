@@ -3,6 +3,7 @@ package pviz
 import scala.scalajs.js.annotation.JSExport
 import org.scalajs.dom
 import org.scalajs.dom.html
+import org.scalajs.dom.MouseEvent
 import scala.util.Random
 import scala.concurrent.Future
 import scalajs.concurrent.JSExecutionContext.Implicits.runNow
@@ -33,6 +34,8 @@ object Viz extends Names {
 
     val headerBox = div.render
     val statusBox = div.render
+    val pauseButton = button("Freeze").render
+    var paused: Boolean = false
 
     def init() = {
       Client[Api].getConfig().call().foreach { config =>
@@ -125,6 +128,17 @@ object Viz extends Names {
           ).render
         )
       }
+
+      pauseButton.onclick = (_: MouseEvent) => {
+        paused = !paused
+        val text = if(paused) {
+          "Resume"
+        }
+        else {
+          "Freeze"
+        }
+        jQuery("button").html(text)
+      }
     }
 
     def update() = {
@@ -177,13 +191,15 @@ object Viz extends Names {
         cls:="container",
         h3("nMix Protocol Status"),
         headerBox,
-        statusBox
+        statusBox,
+        hr(),
+        pauseButton
       ).render
     )
 
     init()
     setInterval(2000) {
-      update()
+      if(!paused) update()
     }
   }
 }
