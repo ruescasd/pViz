@@ -6,10 +6,13 @@ pViz provides a visualization of the [nMix](https://github.com/nVotesOrg/nMix) C
 
 # Running
 
-Currently pViz must run on an nMix trustee, such that there is a working copy of the bulletin board available. This working
-copy is used as the data source to visualize the protocol. All that needs configuring is the filesystem location of that working copy.
+Currently pViz must run on an nMix trustee, such that there is a working copy of the bulletin board available. This working copy is used as the data source to visualize the protocol. All that needs configuring is the filesystem location of that working copy. To configure this, edit the build.sbt file and fine the line
 
-TODO: target directory configuration
+```
+javaOptions += "-Dpviz.target=../nMix/demo/datastore/repo"
+```
+
+This is configured to work by default if you have cloned the pViz project from the same root folder as where you cloned nMix. So the path would to nMix would be '../nMix'. If not, you must change this value.
 
 To start, run
 
