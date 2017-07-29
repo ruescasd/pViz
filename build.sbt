@@ -33,7 +33,8 @@ val pviz = crossProject.settings(
     "io.circe" %% "circe-core" % circeVersion,
     "io.circe" %% "circe-generic" % circeVersion,
     "io.circe" %% "circe-parser" % circeVersion
-  )
+  ),
+  javaOptions += "-Dpviz.target=../nMix/demo/datastore/repo"
 )
 
 val pvizJS = pviz.js

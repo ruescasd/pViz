@@ -1,5 +1,11 @@
 package pviz
 
+import java.io.File
+import java.nio.file.Paths
+import java.nio.file.Files
+
+import java.nio.charset.StandardCharsets
+
 import upickle.default._
 import upickle.Js
 import akka.actor.ActorSystem
@@ -8,12 +14,10 @@ import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
 import scala.concurrent.ExecutionContext.Implicits.global
-import java.io.File
-import java.nio.file.Paths
 import scala.io.Source
-import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
-import java.nio.charset.StandardCharsets
 import scala.collection.mutable.ListBuffer
+
+import io.circe._, io.circe.generic.auto._, io.circe.parser._, io.circe.syntax._
 
 object Template{
   import scalatags.Text.all._
@@ -45,11 +49,17 @@ object AutowireServer extends autowire.Server[Js.Value, Reader, Writer]{
 }
 
 object Server extends Api with Names {
-  val root = "/work/projects/nMix/demo/datastore/repo"
+  val root = sys.props.get("pviz.target").get
 
   def main(args: Array[String]): Unit = {
     implicit val system = ActorSystem()
     implicit val materializer = ActorMaterializer()
+
+    if(!Files.isDirectory(Paths.get(root))) {
+      println(s"The configured pviz.target property is invalid ('$root')")
+      sys.exit
+    }
+
     val route = {
       get{
         pathSingleSlash {
